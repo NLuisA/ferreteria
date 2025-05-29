@@ -159,11 +159,19 @@ $vta_num = 0;
       <?php if ($ventas): ?>
         <?php foreach ($ventas as $vta): ?>
           <tr>
-            <td><?php echo $vta['id']; ?></td>
+            <form method="post" action="<?= base_url('ventas/actualizarPrecioDetalle') ?>">
+          <input type="hidden" name="id_detalle" value="<?= $vta['id'] ?>">
+            <td><?php echo $vta['id'];?></td>
             <td><?php echo $vta['nombre']; ?></td>
             <td><?php echo $vta['cantidad']; ?></td>
-            <td>$ <?php echo $vta['precio']; ?></td>
+            <td>$ <?php echo $vta['precio']; ?>
+            <?php if($estado == 'Pendiente'):?>
+            <input type="number" name="nuevo_precio" value="<?= $vta['precio'] ?>" min="0" step="0.01">
+            <button type="submit">Actualizar</button>
+            <?php endif;?>
+          </td>
             <td>$ <?php echo $vta['total']; ?></td>
+            </form>
           </tr>
         <?php endforeach; ?>
       <?php endif; ?>

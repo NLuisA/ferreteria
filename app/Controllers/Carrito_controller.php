@@ -128,6 +128,35 @@ public function ListCompraDetalle($id)
     echo view('footer/footer');
 }
 
+//realiza la actualizacion de precios en el detalle sin modificar precio de cada producto
+public function actualizarPrecioDetalle()
+{
+    $producto_id = $this->request->getPost('producto_id');
+    $id_detalle = $this->request->getPost('id_detalle');
+    $nuevo_precio = $this->request->getPost('nuevo_precio');
+
+    if (is_numeric($nuevo_precio) && $nuevo_precio >= 0) {
+        $model = new VentaDetalle_model();
+
+        // Validamos que exista esa combinación producto + detalle
+        $detalle = $model->where('id', $id_detalle)
+                         ->where('producto_id', $producto_id)
+                         ->first();
+
+        if ($detalle) {
+            $model->update($id_detalle, ['precio' => $nuevo_precio]);
+
+            return redirect()->back()->with('mensaje', 'Precio actualizado correctamente.');
+        } else {
+            return redirect()->back()->with('error', 'No se encontró el detalle del producto.');
+        }
+    }
+
+    return redirect()->back()->with('error', 'Precio inválido.');
+}
+
+
+
     public function productosAgregados(){
         $cart = \Config\Services::cart();
 		$carrito['carrito']=$cart->contents();

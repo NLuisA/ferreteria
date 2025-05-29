@@ -174,6 +174,7 @@ $routes->get('casiListo', 'Carrito_controller::muestra_compra');
 $routes->post('confirma_compra', 'Carrito_controller::guarda_compra');
 $routes->get('compras', 'Carrito_controller::ListVentasCabecera');
 $routes->get('DetalleVta/(:num)', 'Carrito_controller::ListCompraDetalle/$1');
+$routes->post('ventas/actualizarPrecioDetalle', 'Carrito_controller::actualizarPrecioDetalle');
 $routes->get('Gracias', 'Carrito_controller::GraciasPorSuCompra');
 
 //Facturacion y Reportes
